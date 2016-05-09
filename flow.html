@@ -1,0 +1,87 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			.node {
+			  stroke: #fff;
+			  stroke-width: 2px;
+			}
+			.link {
+			  fill: none;
+			  stroke: #2C3D4A;
+			  stroke-width: 2px;
+
+			}
+
+			.b2-to-c1,
+			.c1-to-c4 {
+				stroke: #3D5365;
+				z-index:-10;
+			}
+			#c1-to-c4,
+			#b2-to-c1 {
+				fill: #3D5365;
+				/*stroke: red;*/
+			}
+		</style>
+	</head>
+	<body style="background: #f5f5f5;">
+		<script src="https://d3js.org/d3.v3.min.js"></script>
+		<svg width="960" height="500">
+				<defs>
+				   <marker id="c1-to-c4" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="42">
+			        	<path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path>
+			      	</marker>
+			      	<marker id="b2-to-c1" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="4" markerHeight="3" orient="128">
+			        	<path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path>
+			      	</marker>
+				</defs>
+			<g transform="translate(10,10)">
+
+				<filter id="dropshadow" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+		     	<feComponentTransfer in="SourceAlpha">
+		        <feFuncR type="discrete" tableValues="1"/>
+		        <feFuncG type="discrete" tableValues="1"/>
+		        <feFuncB type="discrete" tableValues="1"/>
+		     	</feComponentTransfer>
+		     	<feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+		     	<feOffset dx="2" dy="1" result="shadow" />
+		     	<feComposite in="SourceAlpha" in2="shadow" operator="over" />
+		   	</filter>
+		   	
+
+				<path class="link" d="M580.5882352941177,0C580.5882352941177,80 331.7647058823529,80 331.7647058823529,160"></path>
+				<!-- <path class="link b2-to-c1" marker-end="#arrow" d="M718.8235294117648,160C718.8235294117648,240 221.1764705882353,240 221.1764705882353,320"></path>
+				<path class="link c1-to-c4" marker-end="url(#arrow)" d="M221.1764705882353,320C221.1764705882353,400 660.5294117647059,240 660.5294117647059,310"></path> -->
+				<path class="link" d="M331.7647058823529,160C331.7647058823529,240 221.1764705882353,240 221.1764705882353,320"></path>
+				<path class="link" d="M221.1764705882353,320C221.1764705882353,400 110.58823529411765,400 110.58823529411765,480"></path>
+				<path class="link" d="M221.1764705882353,320C221.1764705882353,400 221.1764705882353,400 221.1764705882353,480"></path>
+				<path class="link" d="M580.5882352941177,0C580.5882352941177,80 718.8235294117648,80 718.8235294117648,160"></path>
+				<path class="link" d="M718.8235294117648,160C718.8235294117648,240 663.5294117647059,240 663.5294117647059,320"></path>
+				<path class="link" d="M221.1764705882353,320C221.1764705882353,400 331.7647058823529,400 331.7647058823529,480"></path>
+				<path class="link" d="M580.5882352941177,0C580.5882352941177,80 829.4117647058824,80 829.4117647058824,160"></path>
+				<path class="link" d="M718.8235294117648,160C718.8235294117648,240 774.1176470588235,240 774.1176470588235,320"></path>
+				
+				<path class="link b2-to-c1" marker-end="url(#b2-to-c1)" d="M718.8235294117648,160C718.8235294117648,265 227.1764705882353,285 227.1764705882353,312"></path>
+				<path class="link c1-to-c4" marker-end="url(#c1-to-c4)" d="M221.1764705882353,320C221.1764705882353,405 656.5294117647059,285 656.5294117647059,312"></path>
+				<path class="link b1-to-c2" d="M331.7647058823529,160C331.7647058823529,240 331.7647058823529,240 331.7647058823529,320"></path>
+				<path class="link b1-to-c3" d="M331.7647058823529,160C331.7647058823529,240 442.3529411764706,240 442.3529411764706,320"></path>
+				<path class="link b1-to-c4" d="M331.7647058823529,160C331.7647058823529,240 663.5294117647059,240 663.5294117647059,320"></path>
+				<circle class="node" r="4" cx="580.5882352941177" cy="0"></circle>
+				<circle class="node choice" r="4" cx="331.7647058823529" cy="160"></circle>
+				<circle class="node" r="4" cx="110.58823529411765" cy="480"></circle>
+				<circle class="node" r="4" cx="331.7647058823529" cy="320"></circle>
+				<circle class="node" r="4" cx="442.3529411764706" cy="320"></circle>
+				<circle class="node" r="4" cx="221.1764705882353" cy="480"></circle>
+				<circle class="node c4" r="4" cx="663.5294117647059" cy="320"></circle>
+				<circle class="node" r="4" cx="331.7647058823529" cy="480"></circle>
+				<circle class="node" r="4" cx="829.4117647058824" cy="160"></circle>
+				<circle class="node" r="4" cx="774.1176470588235" cy="320"></circle>
+				<circle class="node b2" r="4" cx="718.8235294117648" cy="160"></circle>
+				<circle class="node c1" r="4" cx="221.1764705882353" cy="320"></circle>
+
+			</g>
+		</svg>
+	</body>
+</html>
+

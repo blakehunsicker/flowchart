@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+  <head>
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<style>
+		body {
+			background: #F5F5F5;
+			font-family: Helvetica;
+		}
+		.question-number {
+			font-weight:bold;
+		}
+		.answer-field {
+			border:1px solid #d5d5d5;
+			border-radius:4px;
+			height:40px;
+			background:#fff;
+			width:400px;
+		}
+		.add-button {
+			cursor:pointer;
+			width:400px;
+			text-align:center;
+			font-weight:bold;
+			padding:10px;
+			color:#395063;
+			background:#E1E7EA;
+			border-radius:4px;
+			border:2px dotted #92b1c1;
+			margin:20px 0;
+		}
+		.save {
+			cursor:pointer;
+			width:400px;
+			text-align:center;
+			font-weight:bold;
+			padding:10px;
+			color:#395063;
+			background:#E1E7EA;
+			border-radius:4px;
+			border:2px solid #92b1c1;
+			margin-top:40px;	
+		}
+
+
+		.question {
+			/*height:80px;*/
+			cursor:pointer;
+			padding: .5em 1em;
+			background: #FFF;
+			border:1px solid #BBB;
+			border-radius:4px;	
+			margin-top: .5em;
+			opacity:0.3;
+		}
+		.question:hover {
+			opacity:0.8;
+		}
+
+		.current_question {
+			opacity:1;
+			margin-left:-20px;
+		}
+
+		.answer {
+			display: inline-block;
+			font-weight: bold;
+		}
+		.answer-tag {
+			position:relative;
+			display:inline-block;
+			text-align:center;
+			font-size:12px;
+			/*margin-left:-25px;*/
+			width: 15%;			
+			color:#FFF;
+			background:#2C3D4A;
+			padding:.25em .25em;
+			margin-bottom:.5em;
+			-webkit-filter:drop-shadow(1px 1px 1px black);
+		}
+		.active {
+			position:relative;
+			display:inline-block;
+			text-align:center;
+			font-size:12px;
+			margin-left:-25px;
+			width: 15%;			
+			color:#FFF;
+			background:#2C3D4A;
+			padding:.25em .25em;
+			margin-bottom:.5em;
+			-webkit-filter:drop-shadow(1px 1px 1px black);
+		}
+		.transit_text {
+			font-style: italic;
+			color:grey;
+		}
+		
+	</style>
+  </head>
+  <body>
+  	<div class="row">
+  	<div class="col-md-12" style="height:20px;color:#fff;background:#111;position:fixed;z-index:100000;margin-bottom:10px;">Flowchart concept test</div>
+  	</div>
+  	<div class="container" style="margin-top:50px;">
+	  	<div class="col-sm-6" style="height:1300px;">
+	  		<div class="editor" style="margin-top:80px;position:fixed;">
+		  		<h3><span class="fill"></span></h3>
+		  		<div class="input-group" style="width:400px;">
+				  <input type="text" class="form-control question-field" placeholder="Enter question text here" aria-describedby="basic-addon2">
+				</div>
+				<div class="add-button">Add media</div>
+		  		<h5>Answer A</h5>
+		  		<div class="input-group" style="width:400px;">
+				  <input type="text" class="form-control answer-a-field" placeholder="Yes" aria-describedby="basic-addon2">
+				</div>
+		  		<h5>Answer B</h5>
+		  		<div class="input-group" style="width:400px;">
+				  <input type="text" class="form-control answer-b-field" placeholder="No" aria-describedby="basic-addon2">
+				</div>
+		  		<div class="add-button">Add question</div>
+		  		<div class="save">Save</div>
+	  		</div>
+	  	</div>
+	  <div class="question col-sm-6">
+	  	<div style="width:100%;height:100%;background:rgba(255,255,255,0.5);">
+
+	  	</div>
+		  	<h6 class="question-number q-number">Question 1</span></h6>
+		  <h5 class="question-text">Do you suffer from any kind of crippling anxiety disorder or demographic claustrophobia?</h5>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">S1</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">Q2</span>
+		  </div>
+	  </div>
+	  <!-- <div class="choices col-sm-6 col-sm-offset-6">
+	  		<div class="choices col-lg-8">
+	  			<h6>Yes</h6>
+	  		</div>
+	  		<div class="col-sm-2">
+
+	  		</div>
+	  		<div class="choices col-lg-8">
+		  		<h6>No</h6>
+	  		</div>
+	  </div> -->
+	  <div class="question col-sm-6">
+  		  <h6 class="question-number q-number">Statement 1</span></h6>
+		  <h5 class="question-text">Go to a Harris Teeter, on a weekday, on your lunch hour.</h5>
+	  </div>
+	  <div class="question q2 col-sm-6">
+		  <h6 class="question-number q-number">Question 2</span></h6>
+		  <h5 class="question-text">Are you having people over?</h4>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q6</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">Q3</span>
+		  </div>
+	  </div>
+	  <div class="question q3 col-sm-6">
+	  	<h6 class="question-number q-number">Question 3</span></h6>
+	  	<h5 class="question-text">Do you know how to cook?</h5>
+	  		<div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q4</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span>
+		  </div>
+	  </div>
+	  <div class="question col-sm-6">
+	  	<h6 class="question-number q-number">Question 4</span></h6>
+	  	<h5 class="question-text">Are you wearing yoga pants?</h5>
+	  	<div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q5</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span>
+		  </div>
+	  </div>
+	  <div class="question col-sm-6">
+	  <h6 class="question-number q-number">Question 5</span></h6>
+	  	<h5 class="question-text">Are you wearing a Hawaiian shirt?</h5>
+	  	<div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q7</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span>
+		  </div>
+	  </div>
+	  <div class="question q6 col-sm-6">
+  		<h6 class="question-number q-number">Question 6</span></h6>
+		  <h5 class="question-text">Do you absolutely need Thai lime and chili cashews?</h5>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span>
+		  </div>
+	  </div>
+	  <div class="question col-sm-6">
+	  	<h6 class="question-number q-number">Question 7</span></h6>
+		  <h5 class="question-text">Are you Jimmy Buffett?</h5>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer A</div>
+		  	<span class="answer">Yes</span>
+		  </div>
+		  <div class="answer-wrap">
+			<div class="answer-tag">Answer B</div>
+		  	<span class="answer">No </span>
+		  </div>
+	  </div>
+	  
+	</div>
+
+	<script type="text/javascript">
+
+		var question_two = $('.q2');
+		$(question_two).addClass('current_question');
+		$(question_two).find('.answer-tag').addClass('active');
+
+		var q2_question_number = $('.q2').find('.q-number').text();
+		var q2_question_text = $('.q2').find('.question-text').text();
+
+
+		var current_question = $('.question').hasClass('current_question');
+
+		$('.question-field').attr('placeholder',q2_question_text);
+		$('.fill').html(q2_question_number);
+	
+
+		$('.save').click(function() {
+			alert('Saved!');
+			
+		})
+		
+
+		$('.question').click(function(){
+			var active_question = $(this);
+			var active_question_number = $(this).find('.q-number').text();
+			var active_question_text = $(this).find('.question-text').text();
+			// var active_answer_a = $(this).find('.answer-wrap:nth-child(0)>.answer').text();
+			
+			$(this).addClass('current_question');
+			$(this).find('.answer-tag').addClass('active');
+
+			$('.question').not(this)
+				.removeClass('current_question')
+				.find('.answer-tag').removeClass('active');
+
+			$('.question-field').attr('placeholder',active_question_text);
+			$('.fill').html(active_question_number);
+
+			if ($(current_question).hasClass('q2')) {
+				$('.q3').css('opacity',0.8);
+				$('.q6').css('opacity',0.8);
+			}
+			
+		})
+
+		
+
+	</script>
+  	
+  </body>

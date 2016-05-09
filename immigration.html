@@ -1,0 +1,274 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+
+    <title>Collapsible Tree Example</title>
+
+    <style>
+
+  .node circle {
+    fill: #2c3d4a;
+    stroke: #f5f5f5;
+    stroke-width: 3px;
+  }
+
+  .node text {
+    font: 12px sans-serif;
+    max-width:90px;
+  }
+
+  .link {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
+  }
+  
+    </style>
+    
+
+  </head>
+
+  <body>
+
+<!-- load the d3.js library --> 
+<script src="http://d3js.org/d3.v3.min.js"></script>
+  
+<script>
+
+var treeData = [
+  {
+    "name": "Do you have a child?",
+    "parent": "null",
+    "children": [
+      {
+        "name": "Is that child a citizen or legal permanent resident?",
+        "parent": "Do you have a child?",
+        "children": [
+          {
+            "name": "NE",
+            "parent": "Is that child a citizen or legal permanent resident?"
+          },
+          {
+            "name": "Was that child born before Nov. 21, 2014?",
+            "parent": "Is that child a citizen or legal permanent resident?",
+            "children": [
+              {
+                "name": "NE",
+                "parent": "Was that child born before Nov. 21, 2014?"
+              },
+              {
+                "name": "Have you continuously lived in the U.S. since before Jan. 1, 2010?",
+                "parent": "Was that child born before Nov. 21, 2014?",
+                "children": [
+                  {
+                    "name": "NE",
+                    "parent": "Have you continuously lived in the U.S. since before Jan. 1, 2010?"
+                  },
+                  {
+                    "name": "Were you physically present in the U.S. on Nov. 20, 2014?",
+                    "parent": "Have you continuously lived in the U.S. since before Jan. 1, 2010?",
+                    "children": [
+                      {
+                        "name": "NE",
+                        "parent": "Were you physically present in the U.S. on Nov. 20, 2014?"
+                      },
+                      {
+                        "name": "Are you willing to pay taxes?",
+                        "parent": "Were you physically present in the U.S. on Nov. 20, 2014?",
+                        "children": [
+                          {
+                            "name": "NE",
+                            "parent": "Are you willing to pay taxes?"
+                          },
+                          {
+                            "name": "COMMITTED",
+                            "parent": "Are you willing to pay taxes?"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Were you brought here as a child?",
+        "parent": "o you have a child?",
+        "children": [
+          {
+            "name": "Was that before Jan. 1, 2010?",
+            "parent": "Were you brought here as a child?",
+            "children": [
+              {
+                "name": "NE",
+                "parent": "Was that before Jan. 1, 2010?"
+              },
+              {
+                "name": "Was that before your 16th birthday?",
+                "parent": "Was that before Jan. 1, 2010?",
+                "children": [
+                  {
+                    "name": "NE",
+                    "parent": "Was that before your 16th birthday?"
+                  },
+                  {
+                    "name": "Are you currently in school?",
+                    "parent": "Was that before your 16th birthday?",
+                    "children": [
+                      {
+                        "name": "Did you graduate or get a GED?",
+                        "parent": "Are you currently in school?",
+                        "children": [
+                          {
+                            "name": "HONORARY DISCHARGE",
+                            "parent": "Did you graduate or get a GED?",
+                            "children": [
+                              {
+                                "name": "NE"
+                              },
+                              {
+                                "name": "COMMITTED"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "COMMITTED",
+                            
+                          }
+                        ]
+                      },
+                      {
+                        "name": "COMMITED",
+                        "parent": "Are you currently in school?",
+                        "children": [
+                          {
+                            "name": "You are eligible!"
+                          },
+                          {
+                            "name": "You are not eligible!"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "NE",
+            "parent": "Were you brought here as a child?"
+          }
+        ]
+      }
+    ]
+  }
+];
+
+// ************** Generate the tree diagram  *****************
+var margin = {top: 40, right: 120, bottom: 20, left: 120},
+  width = 960 - margin.right - margin.left,
+  height = 800 - margin.top - margin.bottom;
+  
+var i = 0;
+
+var tree = d3.layout.tree()
+  .size([height, width]);
+
+var diagonal = d3.svg.diagonal()
+  .projection(function(d) { return [d.x, d.y]; });
+
+var svg = d3.select("body").append("svg")
+  .attr("width", width + margin.right + margin.left)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+root = treeData[0];
+  
+update(root);
+
+function update(source) {
+
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+    links = tree.links(nodes);
+
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 100; });
+
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+    .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+    .attr("class", "node")
+    .attr("transform", function(d) { 
+      return "translate(" + d.x + "," + d.y + ")"; });
+
+  nodeEnter.append("circle")
+    .attr("r", 4)
+    .style("fill", "#fff");
+
+  nodeEnter.append("text")
+    .attr("y", function(d) { 
+      return d.children || d._children ? -20 : 20; })
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middle")
+    .text(function(d) { return d.name; })
+    .style({
+      "fill-opacity": 1,
+      "min-width": "100px",
+    });
+
+  // Declare the links…
+  var link = svg.selectAll("path.link")
+    .data(links, function(d) { return d.target.id; });
+
+  // Enter the links.
+  link.enter().insert("path", "g")
+    .attr("class", "link")
+    .attr("d", diagonal);
+
+  // Recompute the layout and data join.
+  node = node.data(tree.nodes(root), function(d) { return d.id; });
+  link = link.data(tree.links(nodes), function(d) { return d.source.id + "-" + d.target.id; });
+
+  var t = svg.transition()
+      .duration(duration);
+
+  t.selectAll(".link")
+      .attr("d", diagonal);
+
+  t.selectAll(".node")
+      .attr("cx", function(d) { return d.px = d.x; })
+      .attr("cy", function(d) { return d.py = d.y; });
+
+
+}
+
+</script><svg width="960" height="800" style="
+    background: #f5f5f5;
+"><g transform="scale(.8)" style="
+    margin-top: 10px;
+">
+  <defs>
+           <marker id="c1-to-c4" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="6" markerHeight="4" orient="330">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path>
+              </marker>
+              <marker id="b2-to-c1" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="6" markerHeight="4" orient="48">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path>
+              </marker>
+
+<marker id="mid" viewBox="0 0 10 10" refX="1" refY="5" markerUnits="strokeWidth" markerWidth="6" markerHeight="4" orient="20">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke"></path>
+              </marker>
+        </defs>
+  <path class="link" d="M639.090909090909,500C639.090909090909,550 605.4545454545454,550 605.4545454545454,600"></path><path class="link" d="M639.090909090909,500C639.090909090909,550 672.7272727272726,550 672.7272727272726,600"></path><path class="link" d="M403.6363636363636,600C403.6363636363636,650 369.99999999999994,650 369.99999999999994,700"></path><path marker-end="url(#c1-to-c4)" class="link hon-to-com" d="M403.6363636363636,600C403.6363636363636,660 624.090909090909,495 624.090909090909,504"></path><path class="link" d="M437.27272727272725,500C437.27272727272725,550 403.6363636363636,550 403.6363636363636,600"></path><path marker-end="url(#mid)" class="link GED-to-com" d="M437.27272727272725,500C437.27272727272725,550 624.090909090909,480 624.090909090909,495"></path><path class="link" d="M538.1818181818181,400C538.1818181818181,450 437.27272727272725,450 437.27272727272725,500"></path><path class="link" d="M538.1818181818181,400C538.1818181818181,450 639.090909090909,450 639.090909090909,500"></path><path class="link" d="M504.5454545454545,300C504.5454545454545,350 470.9090909090909,350 470.9090909090909,400"></path><path class="link" d="M504.5454545454545,300C504.5454545454545,350 538.1818181818181,350 538.1818181818181,400"></path><path class="link" d="M470.9090909090909,200C470.9090909090909,250 437.27272727272725,250 437.27272727272725,300"></path><path class="link" d="M470.9090909090909,200C470.9090909090909,250 504.5454545454545,250 504.5454545454545,300"></path><path class="link" d="M504.5454545454545,100C504.5454545454545,150 470.9090909090909,150 470.9090909090909,200"></path><path class="link" d="M504.5454545454545,100C504.5454545454545,150 538.1818181818181,150 538.1818181818181,200"></path><path class="link" d="M235.45454545454544,500C235.45454545454544,550 201.8181818181818,550 201.8181818181818,600"></path><path marker-end="url(#b2-to-c1)" class="link taxes-to-com" d="M235.45454545454544,500C235.45454545454544,565 628.090909090909,455 628.090909090909,488"></path><path class="link" d="M201.8181818181818,400C201.8181818181818,450 168.18181818181816,450 168.18181818181816,500"></path><path class="link" d="M201.8181818181818,400C201.8181818181818,450 235.45454545454544,450 235.45454545454544,500"></path><path class="link" d="M168.18181818181816,300C168.18181818181816,350 134.54545454545453,350 134.54545454545453,400"></path><path class="link" d="M168.18181818181816,300C168.18181818181816,350 201.8181818181818,350 201.8181818181818,400"></path><path class="link" d="M134.54545454545453,200C134.54545454545453,250 100.9090909090909,250 100.9090909090909,300"></path><path class="link" d="M134.54545454545453,200C134.54545454545453,250 168.18181818181816,250 168.18181818181816,300"></path><path class="link" d="M100.9090909090909,100C100.9090909090909,150 67.27272727272727,150 67.27272727272727,200"></path><path class="link" d="M100.9090909090909,100C100.9090909090909,150 134.54545454545453,150 134.54545454545453,200"></path><path class="link" d="M302.7272727272727,0C302.7272727272727,50 100.9090909090909,50 100.9090909090909,100"></path><path class="link" d="M302.7272727272727,0C302.7272727272727,50 504.5454545454545,50 504.5454545454545,100"></path><g class="node" transform="translate(538.1818181818181,200)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(672.7272727272726,600)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(605.4545454545454,600)"><circle r="6" style="#2c3d4a"></circle></g><g class="node com" transform="translate(639.090909090909,500)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(369.99999999999994,700)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(403.6363636363636,600)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(437.27272727272725,500)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(538.1818181818181,400)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(470.9090909090909,400)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(504.5454545454545,300)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(437.27272727272725,300)"><circle r="6" style="fill: #2c3d4a;"></circle></g><g class="node" transform="translate(470.9090909090909,200)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(504.5454545454545,100)"><circle r="6" style="fill: #2c3d4a;"></circle></g><g class="node" transform="translate(201.8181818181818,600)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(235.45454545454544,500)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(168.18181818181816,500)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(201.8181818181818,400)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(134.54545454545453,400)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(168.18181818181816,300)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(100.9090909090909,300)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(134.54545454545453,200)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(67.27272727272727,200)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(100.9090909090909,100)"><circle r="6" style="#2c3d4a"></circle></g><g class="node" transform="translate(302.7272727272727,0)"><circle r="6" style="#2c3d4a"></circle></g></g></svg>
+  
+  
+
+</body></html>
