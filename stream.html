@@ -44,7 +44,7 @@
 	  		<span class="vertical-line v2"></span>
 	  		<span class="vertical-line v3" style="display:none;"></span>
 	  		<span class="vertical-line v4" style="display:none;"></span>
-			  <div class="question q1 item col-sm-10">
+			  <div class="question Q1 item col-sm-10">
 				  <div class="row">
 				  	<div class="col-xs-10">
 						  <h6 class="question-number q-number">Question 1</h6>
@@ -67,7 +67,7 @@
 				  	</div>
 				  </div>
 			  </div>
-			  <div class="question q2 item col-sm-10">
+			  <div class="question Q2 item col-sm-10">
 			  	<div class="row">
 					  <div class="col-xs-10">
 			  		  <h6 class="question-number q-number">Question 2</h6>
@@ -88,7 +88,7 @@
 				  	</div>
 			  	</div>
 			  </div>
-			  <div class="question q3 item col-sm-10">
+			  <div class="question Q3 item col-sm-10">
 				  <div class="row">
 						<div class="col-xs-10">
 						  <h6 class="question-number q-number">Question 3</h6>
@@ -109,7 +109,7 @@
 				  	</div>
 			  	</div>
 			  </div>
-			  <div class="question q4 item col-sm-10">
+			  <div class="question Q4 item col-sm-10">
 			  	<h6 class="question-number q-number">Question 4</h6>
 			  	<h5 class="question-text">Have you continuously lived in the U.S. since before Jan. 1, 2010?</h5>
 			  		<div class="answer-wrap">
@@ -121,7 +121,7 @@
 				  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
 				  </div>
 			  </div>
-			  <div class="question q5 item col-sm-10">
+			  <div class="question Q5 item col-sm-10">
 			  	<h6 class="question-number q-number">Question 5</h6>
 			  	<h5 class="question-text">Were you physically present in the U.S. on Nov. 20, 2014?</h5>
 			  	<div class="answer-wrap">
@@ -133,7 +133,7 @@
 				  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
 				  </div>
 			  </div>
-			  <div class="question q6 item col-sm-10">
+			  <div class="question Q6 item col-sm-10">
 				  <h6 class="question-number q-number">Question 6</h6>
 			  	<h5 class="question-text">Are you willing to pay taxes?</h5>
 			  	<div class="answer-wrap">
@@ -145,7 +145,7 @@
 				  	<span class="answer">No</span> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
 				  </div>
 			  </div>
-			  <div class="question q7 item col-sm-10">
+			  <div class="question Q7 item col-sm-10">
 		  		<h6 class="question-number q-number">Question 7</h6>
 				  <h5 class="question-text">Have you ever committed a significant crime or posted a threat to national security?</h5>
 				  <div class="answer-wrap">
@@ -157,7 +157,7 @@
 				  	<span class="answer">No </span>
 				  </div>
 			  </div>
-			  <div class="question q8 item col-sm-10">
+			  <div class="question Q8 item col-sm-10">
 		  		<h6 class="question-number q-number">Question 8</h6>
 				  <h5 class="question-text">Were you brought here as a child?</h5>
 				  <div class="answer-wrap">
@@ -169,31 +169,29 @@
 				  	<span class="answer">No</span> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
 				  </div>
 			  </div>
-		  </div>
-		  <div class="col-sm-5" style="background:#D5D5D5;height:1px;margin:2em 0 1.5em 0;"></div>
-		  <div class="conclusion c1 item col-sm-6">
+			  <div class="conclusion C1 item col-sm-12">
 		  	<h6 class="question-number q-number">Conclusion 1</h6>
 			  <h5 class="question-text">You are not elligible.</h5>
 		  </div>
-		  <div class="conclusion c2 item col-sm-6">
+		  <div class="conclusion C2 item col-sm-12">
 		  	<h6 class="question-number q-number">Conclusion 2</h6>
 			  <h5 class="question-text">You are elligible!</h5>
 		  </div>
+		  </div>
+		  <div class="col-sm-5" style="background:#D5D5D5;height:1px;margin:2em 0 1.5em 0;"></div>
 	  
 
 		</div>
 	<script type="text/javascript">
 
 
-		var question_two = $('.q2');
+		var question_two = $('.Q2');
 		$(question_two).addClass('current_question');
 		$(question_two).find('.answer-tag').addClass('active');
-
-		var q2_question_number = $('.q2').find('.q-number').text();
-		var q2_question_text = $('.q2').find('.question-text').text();
-
-
 		var current_question = $('.question').hasClass('current_question');
+
+		var q2_question_number = $('.Q2').find('.q-number').text();
+		var q2_question_text = $('.Q2').find('.question-text').text();
 
 		$('.question-field').attr('placeholder',q2_question_text);
 		$('.fill').html(q2_question_number);
@@ -201,33 +199,31 @@
 
 		$('.save').click(function() {
 			alert('Saved!');
-			
 		})
+
 		var stream_height = $('.stream').offset().top;
-			var answer_tag_offset = $('.current_question').offset().top;
-			var a_offset = $('.current_question .answer-wrap:nth-of-type(1)').offset().top;
-			var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
-			var a_adjusted = answer_tag_offset - a_offset - 17
-			var b_adjusted = answer_tag_offset - b_offset - 17
+		var answer_tag_offset = $('.current_question').offset().top;
+		var a_offset = $('.current_question .answer-wrap:nth-of-type(1)').offset().top;
+		var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
+		var a_adjusted = answer_tag_offset - a_offset - 17
+		var b_adjusted = answer_tag_offset - b_offset - 17
 
 
-			console.log('stream offset: '+stream_height+'. current question offset: '+answer_tag_offset+'.');
+		console.log('stream offset: '+stream_height+'. current question offset: '+answer_tag_offset+'.');
 
-			$('.hl1').css({
-				'top': (answer_tag_offset - stream_height) - a_adjusted
-			})
-			$('.hl2').css({
-				'top': (answer_tag_offset - stream_height) - b_adjusted
-			})
-			$('.v1').css({
-				'top': (answer_tag_offset - stream_height) - a_adjusted
-			})
-			$('.v2').css({
-				'top': (answer_tag_offset - stream_height) - b_adjusted
-			})
+		$('.hl1').css({
+			'top': (answer_tag_offset - stream_height) - a_adjusted
+		})
+		$('.hl2').css({
+			'top': (answer_tag_offset - stream_height) - b_adjusted
+		})
+		$('.v1').css({
+			'top': (answer_tag_offset - stream_height) - a_adjusted
+		})
+		$('.v2').css({
+			'top': (answer_tag_offset - stream_height) - b_adjusted
+		})
 
-		
-		
 
 		$('.item').click(function(){
 			var active_question = $(this);
@@ -242,6 +238,17 @@
 				.removeClass('current_question')
 				.find('.answer-tag').removeClass('active');
 
+			var a_destination_class = $('.current_question .answer-wrap:nth-of-type(1) .destination_tag').text();
+			console.log('A dest class: ' + a_destination_class)
+			var a_destination_top = $('.'+a_destination_class+'').offset().top;
+			console.log('A dest top is ' + a_destination_top)
+
+			var b_destination_class = $('.current_question .answer-wrap:nth-of-type(2) .destination_tag').text();
+			console.log('B dest class: ' + b_destination_class)
+			var b_destination_top = $('.'+ b_destination_class + '').offset().top;
+			console.log('B dest top is ' + b_destination_top)
+
+
 			$('.question-field').attr('placeholder',active_question_text);
 			$('.fill').html(active_question_number);
 
@@ -251,21 +258,25 @@
 			var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
 			var a_adjusted = answer_tag_offset - a_offset - 17
 			var b_adjusted = answer_tag_offset - b_offset - 17
+			var hl1_top = (answer_tag_offset - stream_height) - a_adjusted
+			var hl2_top = (answer_tag_offset - stream_height) - b_adjusted
 
 
-			console.log('stream offset: '+stream_height+'. current question offset: '+answer_tag_offset+'.');
+			console.log('stream offset: '+stream_height+'. HL1 top: '+hl1_top+'.');
 
 			$('.hl1').css({
-				'top': (answer_tag_offset - stream_height) - a_adjusted
+				'top': hl1_top
 			})
 			$('.hl2').css({
-				'top': (answer_tag_offset - stream_height) - b_adjusted
+				'top': hl2_top
 			})
 			$('.v1').css({
-				'top': (answer_tag_offset - stream_height) - a_adjusted
+				'top': (answer_tag_offset - stream_height) - a_adjusted,
+				'min-height': a_destination_top - hl1_top
 			})
 			$('.v2').css({
-				'top': (answer_tag_offset - stream_height) - b_adjusted
+				'top': (answer_tag_offset - stream_height) - b_adjusted,
+				'min-height': b_destination_top - hl2_top
 			})
 			
 		})
