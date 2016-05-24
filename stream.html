@@ -12,22 +12,33 @@
 	</style>
   </head>
   <body>
-  	<div class="row">
-  	<div class="col-md-12" style="height:20px;color:#fff;background:#111;position:fixed;z-index:100000;margin-bottom:10px;">Flowchart concept test</div>
+  	<div class="head col-md-12" style="">Flowchart concept test
   	</div>
-  	<div class="container" style="margin-top:50px;">
+  	<div class="container" style="">
 	  	<div class="col-sm-5" style="height:1300px;">
-	  		<div class="editor" style="margin-top:80px;position:fixed;">
+	  		<div class="editor">
 		  		<h3><span class="fill"></span></h3>
 		  		<div class="input-group" style="width:400px;">
 				  <input type="text" class="form-control question-field" placeholder="Enter question text here" aria-describedby="basic-addon2">
 				</div>
 				<div class="add-button">Add media</div>
-		  		<h5>Answer A</h5>
+		  		<h5>
+		  			<label style="font-weight:400;">
+		  				Answer A<span style="margin-right:20px;"></span>
+		  				<input type="radio"> is a step<span style="margin-left:20px;"></span> <input type="radio"> is a conclusion<span style="margin-left:20px;"></span> <select class="form-control input-sm" style="display:inline-block;width:80px;">C1</select>
+		  			</label>
+		  		</h5>
 		  		<div class="input-group" style="width:400px;">
 				  <input type="text" class="form-control answer-a-field" placeholder="Yes" aria-describedby="basic-addon2">
 				</div>
-		  		<h5>Answer B</h5>
+		  		<h5>
+		  			<label style="font-weight:400;">
+		  				Answer B<span style="margin-right:20px;"></span>
+		  				<input type="radio"> is a step<span style="margin-left:20px;"></span> <input type="radio"> is a conclusion<span style="margin-left:20px;"></span> <select class="form-control input-sm" style="display:inline-block;width:80px;">
+		  					<option>C1</option>
+		  				</select>
+		  			</label>
+		  		</h5>
 		  		<div class="input-group" style="width:400px;">
 				  <input type="text" class="form-control answer-b-field" placeholder="No" aria-describedby="basic-addon2">
 				</div>
@@ -38,8 +49,8 @@
 	  	<div class="stream col-sm-6" style="height:2000px;">
 	  		<span class="horizontal-line hl1"></span>
 	  		<span class="horizontal-line hl2"></span>
-	  		<span class="horizontal-line hl3" style="display:none;"></span>
-	  		<span class="horizontal-line hl4" style="display:none;"></span>
+	  		<span class="horizontal-line hl3"></span>
+	  		<span class="horizontal-line hl4"></span>
 	  		<span class="vertical-line v1"></span>
 	  		<span class="vertical-line v2"></span>
 	  		<span class="vertical-line v3" style="display:none;"></span>
@@ -55,11 +66,7 @@
 						  </div>
 						  <div class="answer-wrap">
 								<div class="answer-tag">Answer B</div>
-						  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">Q4</span>
-						  	<span class="answer-tag active" style="
-								    position: absolute;
-								    right: -104px;
-								">Answer A</span>
+						  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
 						  </div>
 					  </div>
 					  <div class="col-xs-2">
@@ -82,9 +89,7 @@
 						  </div>
 					  </div>
 					  <div class="col-xs-2">
-					  	<div style="background:#eee;width:100%;display:inline-table;">
-					  		<i class="fa fa-ellipsis-v" aria-hidden="true" style="float:right;"></i>
-					  	</div>
+					  	
 				  	</div>
 			  	</div>
 			  </div>
@@ -103,9 +108,7 @@
 						  </div>
 					  </div>
 					  <div class="col-xs-2">
-					  	<div style="background:#eee;width:100%;display:inline-table;">
-					  		<i class="fa fa-ellipsis-v" aria-hidden="true" style="float:right;"></i>
-					  	</div>
+					  	
 				  	</div>
 			  	</div>
 			  </div>
@@ -114,11 +117,11 @@
 			  	<h5 class="question-text">Have you continuously lived in the U.S. since before Jan. 1, 2010?</h5>
 			  		<div class="answer-wrap">
 					<div class="answer-tag">Answer A</div>
-				  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q5</span>
+				  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q6</span>
 				  </div>
 				  <div class="answer-wrap">
 					<div class="answer-tag">Answer B</div>
-				  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
+				  	<span class="answer">No </span> <span class="transit_text">goes to</span> <span class="destination_tag">Q7</span>
 				  </div>
 			  </div>
 			  <div class="question Q5 item col-sm-10">
@@ -207,6 +210,8 @@
 		var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
 		var a_adjusted = answer_tag_offset - a_offset - 17
 		var b_adjusted = answer_tag_offset - b_offset - 17
+		var hl1_top = (answer_tag_offset - stream_height) - a_adjusted
+			var hl2_top = (answer_tag_offset - stream_height) - b_adjusted
 
 
 		console.log('stream offset: '+stream_height+'. current question offset: '+answer_tag_offset+'.');
@@ -245,6 +250,7 @@
 
 			var b_destination_class = $('.current_question .answer-wrap:nth-of-type(2) .destination_tag').text();
 			console.log('B dest class: ' + b_destination_class)
+			console.log('b parent should be '+$('.'+b_destination_class+'').parent())
 			var b_destination_top = $('.'+ b_destination_class + '').offset().top;
 			console.log('B dest top is ' + b_destination_top)
 
@@ -256,13 +262,16 @@
 			var answer_tag_offset = $('.current_question').offset().top;
 			var a_offset = $('.current_question .answer-wrap:nth-of-type(1)').offset().top;
 			var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
-			var a_adjusted = answer_tag_offset - a_offset - 17
-			var b_adjusted = answer_tag_offset - b_offset - 17
+			var a_adjusted = answer_tag_offset - a_offset - 13.5
+			var b_adjusted = answer_tag_offset - b_offset - 13.5
 			var hl1_top = (answer_tag_offset - stream_height) - a_adjusted
 			var hl2_top = (answer_tag_offset - stream_height) - b_adjusted
 
 
 			console.log('stream offset: '+stream_height+'. HL1 top: '+hl1_top+'.');
+
+			$('.'+a_destination_class+'').css('opacity','0.8');
+			$('.'+b_destination_class+'').css('opacity','0.8');
 
 			$('.hl1').css({
 				'top': hl1_top
@@ -272,11 +281,15 @@
 			})
 			$('.v1').css({
 				'top': (answer_tag_offset - stream_height) - a_adjusted,
-				'min-height': a_destination_top - hl1_top
+				'min-height': a_destination_top - hl1_top - 50
 			})
 			$('.v2').css({
 				'top': (answer_tag_offset - stream_height) - b_adjusted,
 				'min-height': b_destination_top - hl2_top
+			})
+
+			$('.hl3').css({
+				'top': hl1_top + $('.v1').height()
 			})
 			
 		})
