@@ -87,7 +87,7 @@
 						  <h5 class="question-text">Is that child a citizen or legal permanent resident?</h5>
 						  <div class="answer-wrap">
 							<div class="answer-tag">Answer A</div>
-						  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q3</span>
+						  	<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q4</span>
 						  </div>
 						  <div class="answer-wrap">
 							<div class="answer-tag">Answer B</div>
@@ -105,8 +105,9 @@
 				  		<h6 class="question-number q-number">Question 3</h6>
 						  <h5 class="question-text">Were you brought here as a child?</h5>
 						  <div class="answer-wrap">
-							<div class="answer-tag">Answer A</div> <span class="transit_text">goes to</span> <span class="destination_tag">C1</span>
-						  	<span class="answer">Yes</span>
+								<div class="answer-tag">Answer A</div>
+								<span class="answer">Yes</span> <span class="transit_text">goes to</span> <span class="destination_tag">Q8</span>
+						  	
 						  </div>
 						  <div class="answer-wrap">
 								<div class="answer-tag">Answer B</div>
@@ -367,31 +368,66 @@
 		$('.save').click(function() {
 			alert('Saved!');
 		})
+		
+		var active_question = $('.Q2');
+			var active_question_number = $('.Q2').find('.q-number').text();
+			var active_question_text = $('.Q2').find('.question-text').text();
 
-		var stream_height = $('.stream').offset().top;
-		var answer_tag_offset = $('.current_question').offset().top;
-		var a_offset = $('.current_question .answer-wrap:nth-of-type(1)').offset().top;
-		var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
-		var a_adjusted = answer_tag_offset - a_offset - 17
-		var b_adjusted = answer_tag_offset - b_offset - 17
-		var hl1_top = (answer_tag_offset - stream_height) - a_adjusted
+		var a_destination_class = $('.current_question .answer-wrap:nth-of-type(1) .destination_tag').text();
+			console.log('A dest class: ' + a_destination_class)
+			var a_destination_top = $('.'+a_destination_class+'').offset().top;
+			console.log('A dest top is ' + a_destination_top)
+
+			var b_destination_class = $('.current_question .answer-wrap:nth-of-type(2) .destination_tag').text();
+			console.log('B dest class: ' + b_destination_class)
+			console.log('b parent should be '+$('.'+b_destination_class+'').parent())
+			var b_destination_top = $('.'+ b_destination_class + '').offset().top;
+			console.log('B dest top is ' + b_destination_top)
+
+
+			$('.question-field').attr('placeholder',active_question_text);
+			$('.fill').html(active_question_number);
+
+			$('.current_question').find('.answer-tag').css('margin-left','-25px;');
+
+
+
+			var stream_height = $('.stream').offset().top;
+			var answer_tag_offset = $('.current_question').offset().top;
+			var a_offset = $('.current_question .answer-wrap:nth-of-type(1)').offset().top;
+			var b_offset = $('.current_question .answer-wrap:nth-of-type(2)').offset().top;			
+			var a_adjusted = answer_tag_offset - a_offset - 13.5
+			var b_adjusted = answer_tag_offset - b_offset - 13.5
+			var hl1_top = (answer_tag_offset - stream_height) - a_adjusted
 			var hl2_top = (answer_tag_offset - stream_height) - b_adjusted
 
+			console.log('stream offset: '+stream_height+'. HL1 top: '+hl1_top+'.');
 
-		console.log('stream offset: '+stream_height+'. current question offset: '+answer_tag_offset+'.');
+			$('.'+a_destination_class+'').css('opacity','0.8');
+			$('.'+b_destination_class+'').css('opacity','0.8');
+			$('.question').not($('.'+a_destination_class+', .'+b_destination_class+'')).css('opacity','0.3');
 
-		$('.hl1').css({
-			'top': (answer_tag_offset - stream_height) - a_adjusted
-		})
-		$('.hl2').css({
-			'top': (answer_tag_offset - stream_height) - b_adjusted
-		})
-		$('.v1').css({
-			'top': (answer_tag_offset - stream_height) - a_adjusted
-		})
-		$('.v2').css({
-			'top': (answer_tag_offset - stream_height) - b_adjusted
-		})
+			$('.hl1').css({
+				'top': hl1_top
+			})
+			$('.hl2').css({
+				'top': hl2_top
+			})
+			$('.v1').css({
+				'top': (answer_tag_offset - stream_height) - a_adjusted,
+				'min-height': a_destination_top - hl1_top - 75
+			})
+			$('.v2').css({
+				'top': (answer_tag_offset - stream_height) - b_adjusted,
+				'min-height': b_destination_top - hl2_top - 75
+			})
+
+			$('.hl3').css({
+				'top': hl1_top + $('.v1').height()
+			})
+			$('.hl4').css({
+				'top': hl2_top + $('.v2').height()
+			})
 
 
 		$('.item').click(function(){
