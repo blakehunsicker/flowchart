@@ -151,6 +151,7 @@ body {
 
 .conclusion {
 	color:#FFF;
+	float: right;
 	cursor:pointer;
 	padding: .5em 1em;
 	background: #2C3D4A;
