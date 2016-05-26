@@ -206,3 +206,27 @@ body {
 	font-style: italic;
 	color:grey;
 }
+.movable {
+	text-align: center;
+	margin-top:10px;
+	margin-bottom:10px;
+	background: #ddd;
+	padding-top: 100%;
+
+}
+.fa-th {
+	color:#f7f7f7;
+}
+.add-step {
+	float:right;
+	cursor:pointer;
+	/*width:400px;*/
+	text-align:center;
+	font-weight:bold;
+	padding:10px;
+	color:#395063;
+	background:#E1E7EA;
+	border-radius:4px;
+	border:2px dotted #92b1c1;
+	margin:20px 0;
+}
